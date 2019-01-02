@@ -1,0 +1,75 @@
+{
+  "name": "sv-conc",
+  "version": "1.0.0",
+  "description": "a simple visualization application for concordance",
+  "main": "index.js",
+  "scripts": {
+    "build": "node ./build.js",
+    "test": "node ./spec/bin/unit.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moritzbuhl/svConc.git"
+  },
+  "keywords": [
+    "concordance",
+    "visualization"
+  ],
+  "author": {
+    "name": "Moritz Buhl",
+    "email": "svc@moritzbuhl.de",
+    "url": "https://moritzbuhl.de/"
+  },
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/moritzbuhl/svConc/issues"
+  },
+  "homepage": "https://svc.moritzbuhl.de/",
+  "target": {
+    "outputPath": "./build/Release",
+    "srcPrefix": "./src/",
+    "files": [
+      {
+        "name": "App.js",
+        "sources": [
+          "Graph.js",
+          "ListEntry.js",
+          "main.js",
+          "Search.js",
+          "Text.js",
+          "TextWorkerClient.js",
+          "Widget.js"
+        ]
+      },
+      {
+        "name": "TextWorker.js",
+        "sources": [
+          "TextWorker.js"
+        ]
+      }
+    ],
+    "assets": [
+      "material-design-icons/action/1x_web/ic_book_black_24dp.png",
+      "material-design-icons/action/1x_web/ic_delete_black_24dp.png",
+      "material-design-icons/action/1x_web/ic_exit_to_app_black_24dp.png",
+      "material-design-icons/action/1x_web/ic_help_outline_black_24dp.png",
+      "material-design-icons/action/1x_web/ic_search_black_24dp.png",
+      "material-design-icons/action/1x_web/ic_settings_black_24dp.png",
+      "material-design-icons/action/1x_web/ic_visibility_black_24dp.png",
+      "material-design-icons/action/1x_web/ic_visibility_off_black_24dp.png",
+      "material-design-icons/action/1x_web/ic_zoom_in_black_24dp.png",
+      "material-design-icons/action/1x_web/ic_zoom_out_black_24dp.png",
+      "material-design-icons/content/1x_web/ic_add_circle_outline_black_24dp.png",
+      "material-design-icons/content/1x_web/ic_content_copy_black_24dp.png",
+      "material-design-icons/content/1x_web/ic_save_black_24dp.png",
+      "material-design-icons/editor/1x_web/ic_drag_handle_black_24dp.png",
+      "material-design-icons/editor/1x_web/ic_format_color_reset_black_24dp.png",
+      "material-design-icons/editor/1x_web/ic_insert_chart_black_24dp.png",
+      "material-design-icons/file/1x_web/ic_cloud_upload_black_24dp.png",
+      "material-design-icons/file/1x_web/ic_file_download_black_24dp.png",
+      "material-design-icons/file/1x_web/ic_file_upload_black_24dp.png",
+      "material-design-icons/navigation/1x_web/ic_refresh_black_24dp.png",
+      "src/index.html"
+    ]
+  }
+}
