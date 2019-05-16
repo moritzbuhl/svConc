@@ -10,7 +10,6 @@ const path = require('path');
 /**
  * Remove JS comments starting with '/**' from a string
  * and replace it with empty lines.
- * @duplicated {@link /bin/coverage}
  * @param {string} code - the code with comments
  * @returns {string} the code without comments
  */

@@ -27,8 +27,8 @@ const states = [
 ];
 
 function initNav() {
-	const views = {};
-	const back = get('back');
+  const views = {};
+  const back = get('back');
   const main = get('main_view');
   states.forEach(state => {
     views[state] = get(`${state}_view`);
@@ -39,22 +39,22 @@ function initNav() {
   main.style.display = null;
   back.style.background = 'none';
 
-	back.addEventListener('click', () => {
-	  get(`${UI.state}_view`).style.display = 'none';
-		back.style.background = 'none';
-		main.style.display = null;
+  back.addEventListener('click', () => {
+    get(`${UI.state}_view`).style.display = 'none';
+    back.style.background = 'none';
+    main.style.display = null;
     UI.state = 'main';
-	});
-	states.forEach(id => {
-		get(id).addEventListener('click', ev => {
-			back.style.background = null;
-			views[UI.state].style.display = 'none';
+  });
+  states.forEach(id => {
+    get(id).addEventListener('click', ev => {
+      back.style.background = null;
+      views[UI.state].style.display = 'none';
       UI.state = ev.target.id;
-			views[UI.state].style.display = null;
+      views[UI.state].style.display = null;
       //if (UI[UI.state].current) UI[UI.state].current.display();
-		});
+    });
     get(`${id}_settings`).style.visibility = 'hidden';
-	});
+  });
 }
 
 function initFiles() {
