@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>svConc</title>
+<script type="text/javascript" src="App.js"></script>
+
+		<style>
+#graphs_settings > div,
+#searches_settings > div,
+#files_settings > div {
+	margin: 46px 32px;
+}
+#graphs_settings > div > label,
+#searches_settings > div > label,
+#files_settings > div > label {
+	display: block;
+}
+#searches_settings > div > label > input[type="radio"]:not(:checked) + label + * + * + * + div,
+#files_settings > div > label > input[type="radio"]:not(:checked) + label + * + * + * + div {
+	display: none;
+}
+#searches_settings > div > label > input[type="radio"]:checked + * + div,
+#files_settings > div > label > input[type="radio"]:checked + * + div {
+	display: block;
+}
+select,
+#graphs_settings > div > label > input,
+#searches_settings > div > label > input,
+#files_settings > div > label > input {
+	margin-left: 148px;
+}
+#graphs_settings > div > label > div,
+#searches_settings > div > label > div,
+#files_settings > div > label > div {
+	margin: 20px 60px;
+}
+body {
+	margin: 0;
+	font-family: sans-serif;
+}
+nav {
+	border-bottom: 1px solid lightgrey;
+}
+body > nav {
+	overflow: hidden;
+	display: flex;
+}
+body > nav > ul {
+	height: 32px;
+	width: 100vw;
+}
+body > nav > ul > li {
+	width: 100%;
+	opacity: 1;
+}
+#files {
+	background: url('ic_book_black_24dp.png') no-repeat center;
+}
+#searches {
+	background: url('ic_search_black_24dp.png') no-repeat center;
+}
+#settings {
+	background: url('ic_settings_black_24dp.png') no-repeat center;
+}
+#manual {
+	background: url('ic_help_outline_black_24dp.png') no-repeat center;
+}
+nav > ul {
+	list-style: none;
+	margin: 0;
+	padding: 4px 0;
+	display: flex;
+}
+nav li {
+	opacity: 0.6;
+}
+nav li {
+	padding: 0 16px;
+}
+nav li:not(:last-child),
+body > nav li {
+	border-right: 1px solid lightgrey;
+}
+input[type="color"] {
+	padding: 0;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	width: 166px;
+	height: 30px;
+}
+#file_upload {
+	background: url('ic_file_upload_black_24dp.png') no-repeat center;
+}
+#cloud_import {
+	background: url('ic_cloud_upload_black_24dp.png') no-repeat center;
+}
+.new {
+	background: url('ic_add_circle_outline_black_24dp.png') no-repeat center;
+}
+.duplicate {
+	background: url('ic_content_copy_black_24dp.png') no-repeat center;
+}
+#back {
+	padding: 4px 13px;
+	height: 32px;
+	width: 32px;
+	background: url('ic_exit_to_app_black_24dp.png') no-repeat center;
+	display: block;
+}
+.list {
+	width: calc(25vw + 160px);
+	border-right: 1px solid lightgrey;
+	height: 100%;
+}
+.list > ul {
+	margin: 4px 0 4px 56px;
+	height: 100%;
+	border-left: 1px solid lightgrey;
+	padding: 8px 4px;
+	display: inline-flex;
+	flex-direction: column;
+	justify-content: start;
+	overflow-y: scroll;
+	width: 30vw;
+}
+.list > ul > li {
+	height: 24px;
+	line-height: 24px;
+	font-size: 16px;
+	margin: 0 4px;
+	padding: 4px;
+	overflow: hidden;
+	text-align: left;
+	border-bottom: 1px solid lightgrey;
+}
+aside,
+main {
+	height: calc(100vh - 32px - 8px - 1px);
+	overflow: hidden;
+	background-color: white;
+	display: flex;
+}
+#graph_view {
+	display: block;
+	height:100%;
+	width: 100vw;
+}
+
+#graphs_settings,
+#searches_settings,
+#files_settings {
+	width: 100%;
+}
+
+#graphs_settings > nav ul,
+#searches_settings > nav ul,
+#files_settings > nav ul {
+	justify-content: start;
+}
+ul {
+	height: 24px;
+	justify-content: end;
+}
+
+nav li {
+	width: 24px;
+}
+#graph_show {
+	background: url('ic_visibility_black_24dp.png') no-repeat center;
+}
+#graphs {
+	background: url('ic_insert_chart_black_24dp.png') no-repeat center;
+}
+#graph_view > div {
+	overflow: scroll;
+	width: 100%;
+	height: calc(100% - 32px);
+}
+.graph {
+	width: 100px;
+	font-size: 10px;
+	border: 1px solid grey;
+	background-color: white;
+	position: absolute;
+	z-index: 1;
+}
+.graph > nav {
+	padding-bottom: 2px;
+	margin-bottom: 4px;
+}
+.graph > nav ul {
+	height: 16px;
+	justify-content: space-around;
+}
+.graph > nav li {
+	opacity: 0.5;
+	width: 100%;
+	height: 16px;
+	background-size: 16px;
+	background-repeat: no-repeat;
+	background-position: center;
+	padding: 0;
+}
+.graph > h6 {
+	font-size: 12px;
+font-weight: 900;
+display: block;
+text-align: center;
+padding: 0 2px;
+margin: 0;
+}
+.remove {
+	background: url('ic_delete_black_24dp.png') center no-repeat;
+}
+.reset {
+	background: url('ic_refresh_black_24dp.png') center no-repeat;
+}
+.save {
+	background: url('ic_save_black_24dp.png') center no-repeat;
+}
+.graph_move {
+	background: url('ic_drag_handle_black_24dp.png');
+}
+.graph_hide {
+	background: url('ic_visibility_off_black_24dp.png');
+}
+.graph_download {
+	background: url('ic_file_download_black_24dp.png');
+}
+.graph_bigger {
+	background: url('ic_zoom_in_black_24dp.png');
+}
+.graph_smaller {
+	background: url('ic_zoom_out_black_24dp.png');
+}
+.graph .paper {
+	width: calc(100% - 6px - 3px);
+	margin: 4px 3px;
+}
+.graph .text {
+	font-size: calc(12px / 6.40711146);
+	line-height: calc(15px / 6.40711146);
+}
+.graph_title {
+	font-weight: 700;
+	display: block;
+	text-align: center;
+	padding: 0 2px;
+	margin: 0;
+}
+.graph_info {
+	padding: 0 2px;
+	margin: 0;
+}
+.paper {
+	border: 1px solid black;
+	width: calc(100% - 6vw - 3px);
+	margin: 4vh 3vw;
+	display: flex;
+}
+.paper pre {
+	white-space: pre-wrap;
+}
+#text_bigger {
+	background: url('ic_zoom_in_black_24dp.png') center no-repeat;
+}
+#text_smaller {
+	background: url('ic_zoom_out_black_24dp.png') center no-repeat;
+}
+#text_highlight {
+	background: url('ic_format_color_reset_black_24dp.png') center no-repeat;
+}
+#text_save {
+	background: url('ic_file_download_black_24dp.png') center no-repeat;
+}
+.text {
+	width: 70%;
+	margin: 10px auto;
+	font-size: 12px;
+	font-family: serif;
+}
+		</style>
+	</head>
+	<body>
+		<nav>
+			<ul>
+				<li id="files" title="Texte"></li>
+				<li id="searches" title="Suchen"></li>
+				<li id="graphs" title="Graphen"></li>
+				<li id="manual" title="Handbuch"></li>
+			</ul>
+			<span id="back" title="Zurück zur Hauptansicht"></span>
+		</nav>
+		<aside id="files_view">
+			<div class="list">
+			<nav>
+				<ul>
+					<li id="file_upload" title="Text hochladen">
+						<label for="file-upload" style="display: block; height: 100%;"></label>
+						<input id="file-upload" type="file" multiple style="display:none;"></input>
+					</li>
+					<!--<li id="cloud_import" title="Text aus der Cloud importieren"></li>-->
+				</ul>
+			</nav>
+			<ul id="files_list">
+			</ul>
+</div>
+<div id="files_settings">
+	<nav>
+		<ul>
+			<li id="file_save" class="save" title="Text speichern"></li>
+			<li id="file_reset" class="reset" title="Text zurücksetzen"></li>
+			<li id="file_remove" class="remove" title="Text entfernen"></li>
+		</ul>
+	</nav>
+	<div>
+	<label>Textname: <input id="file_name" placeholder="Zarathustra"/></label>
+	<label>Dateikodierung: <input id="file_encoding" list="encodings" placeholder="utf-8"/></label>
+	<datalist id="encodings">
+		<option value="unicode-1-1-utf-8">
+		<option value="utf-8">
+		<option value="utf8">
+		<option value="866">
+		<option value="cp866">
+		<option value="csibm866">
+		<option value="ibm866">
+		<option value="csisolatin2">
+		<option value="iso-8859-2">
+		<option value="iso-ir-101">
+		<option value="iso8859-2">
+		<option value="iso88592">
+		<option value="iso_8859-2">
+		<option value="iso_8859-2:1987">
+		<option value="l2">
+		<option value="latin2">
+		<option value="csisolatin3">
+		<option value="iso-8859-3">
+		<option value="iso-ir-109">
+		<option value="iso8859-3">
+		<option value="iso88593">
+		<option value="iso_8859-3">
+		<option value="iso_8859-3:1988">
+		<option value="l3">
+		<option value="latin3">
+		<option value="csisolatin4">
+		<option value="iso-8859-4">
+		<option value="iso-ir-110">
+		<option value="iso8859-4">
+		<option value="iso88594">
+		<option value="iso_8859-4">
+		<option value="iso_8859-4:1988">
+		<option value="l4">
+		<option value="latin4">
+		<option value="csisolatincyrillic">
+		<option value="cyrillic">
+		<option value="iso-8859-5">
+		<option value="iso-ir-144">
+		<option value="iso8859-5">
+		<option value="iso88595">
+		<option value="iso_8859-5">
+		<option value="iso_8859-5:1988">
+		<option value="arabic">
+		<option value="asmo-708">
+		<option value="csiso88596e">
+		<option value="csiso88596i">
+		<option value="csisolatinarabic">
+		<option value="ecma-114">
+		<option value="iso-8859-6">
+		<option value="iso-8859-6-e">
+		<option value="iso-8859-6-i">
+		<option value="iso-ir-127">
+		<option value="iso8859-6">
+		<option value="iso88596">
+		<option value="iso_8859-6">
+		<option value="iso_8859-6:1987">
+		<option value="csisolatingreek">
+		<option value="ecma-118">
+		<option value="elot_928">
+		<option value="greek">
+		<option value="greek8">
+		<option value="iso-8859-7">
+		<option value="iso-ir-126">
+		<option value="iso8859-7">
+		<option value="iso88597">
+		<option value="iso_8859-7">
+		<option value="iso_8859-7:1987">
+		<option value="sun_eu_greek">
+		<option value="csiso88598e">
+		<option value="csisolatinhebrew">
+		<option value="hebrew">
+		<option value="iso-8859-8">
+		<option value="iso-8859-8-e">
+		<option value="iso-ir-138">
+		<option value="iso8859-8">
+		<option value="iso88598">
+		<option value="iso_8859-8">
+		<option value="iso_8859-8:1988">
+		<option value="visual">
+		<option value="csiso88598i">
+		<option value="iso-8859-8-i">
+		<option value="logical">
+		<option value="csisolatin6">
+		<option value="iso-8859-10">
+		<option value="iso-ir-157">
+		<option value="iso8859-10">
+		<option value="iso885910">
+		<option value="l6">
+		<option value="latin6">
+		<option value="iso-8859-13">
+		<option value="iso8859-13">
+		<option value="iso885913">
+		<option value="iso-8859-14">
+		<option value="iso8859-14">
+		<option value="iso885914">
+		<option value="csisolatin9">
+		<option value="iso-8859-15">
+		<option value="iso8859-15">
+		<option value="iso885915">
+		<option value="iso_8859-15">
+		<option value="l9">
+		<option value="iso-8859-16">
+		<option value="cskoi8r">
+		<option value="koi">
+		<option value="koi8">
+		<option value="koi8-r">
+		<option value="koi8_r">
+		<option value="koi8-ru">
+		<option value="koi8-u">
+		<option value="csmacintosh">
+		<option value="mac">
+		<option value="macintosh">
+		<option value="x-mac-roman">
+		<option value="dos-874">
+		<option value="iso-8859-11">
+		<option value="iso8859-11">
+		<option value="iso885911">
+		<option value="tis-620">
+		<option value="windows-874">
+		<option value="cp1250">
+		<option value="windows-1250">
+		<option value="x-cp1250">
+		<option value="cp1251">
+		<option value="windows-1251">
+		<option value="x-cp1251">
+		<option value="ansi_x3.4-1968">
+		<option value="ascii">
+		<option value="cp1252">
+		<option value="cp819">
+		<option value="csisolatin1">
+		<option value="ibm819">
+		<option value="iso-8859-1">
+		<option value="iso-ir-100">
+		<option value="iso8859-1">
+		<option value="iso88591">
+		<option value="iso_8859-1">
+		<option value="iso_8859-1:1987">
+		<option value="l1">
+		<option value="latin1">
+		<option value="us-ascii">
+		<option value="windows-1252">
+		<option value="x-cp1252">
+		<option value="cp1253">
+		<option value="windows-1253">
+		<option value="x-cp1253">
+		<option value="cp1254">
+		<option value="csisolatin5">
+		<option value="iso-8859-9">
+		<option value="iso-ir-148">
+		<option value="iso8859-9">
+		<option value="iso88599">
+		<option value="iso_8859-9">
+		<option value="iso_8859-9:1989">
+		<option value="l5">
+		<option value="latin5">
+		<option value="windows-1254">
+		<option value="x-cp1254">
+		<option value="cp1255">
+		<option value="windows-1255">
+		<option value="x-cp1255">
+		<option value="cp1256">
+		<option value="windows-1256">
+		<option value="x-cp1256">
+		<option value="cp1257">
+		<option value="windows-1257">
+		<option value="x-cp1257">
+		<option value="cp1258">
+		<option value="windows-1258">
+		<option value="x-cp1258">
+		<option value="x-mac-cyrillic">
+		<option value="x-mac-ukrainian">
+		<option value="chinese">
+		<option value="csgb2312">
+		<option value="csiso58gb231280">
+		<option value="gb2312">
+		<option value="gb_2312">
+		<option value="gb_2312-80">
+		<option value="gbk">
+		<option value="iso-ir-58">
+		<option value="x-gbk">
+		<option value="gb18030">
+		<option value="big5">
+		<option value="big5-hkscs">
+		<option value="cn-big5">
+		<option value="csbig5">
+		<option value="x-x-big5">
+		<option value="cseucpkdfmtjapanese">
+		<option value="euc-jp">
+		<option value="x-euc-jp">
+		<option value="csiso2022jp">
+		<option value="iso-2022-jp">
+		<option value="csshiftjis">
+		<option value="ms932">
+		<option value="ms_kanji">
+		<option value="shift-jis">
+		<option value="shift_jis">
+		<option value="sjis">
+		<option value="windows-31j">
+		<option value="x-sjis">
+		<option value="cseuckr">
+		<option value="csksc56011987">
+		<option value="euc-kr">
+		<option value="iso-ir-149">
+		<option value="korean">
+		<option value="ks_c_5601-1987">
+		<option value="ks_c_5601-1989">
+		<option value="ksc5601">
+		<option value="ksc_5601">
+		<option value="windows-949">
+		<option value="csiso2022kr">
+		<option value="hz-gb-2312">
+		<option value="iso-2022-cn">
+		<option value="iso-2022-cn-ext">
+		<option value="iso-2022-kr">
+		<option value="replacement">
+		<option value="utf-16be">
+		<option value="utf-16">
+		<option value="utf-16le">
+		<option value="x-user-defined">
+	</datalist>
+	<br>
+	<label for="">Kapitel
+<br>
+		<input name="chapter_settings" id="chapter_settings1" type="radio">
+		<label for="chapter_settings1"> nicht nutzen</label>
+<br>
+		<input name="chapter_settings" id="chapter_settings2" type="radio">
+		<label for="chapter_settings2"> aus XML übernehmen</label>
+<br>
+		<input name="chapter_settings" id="chapter_settings3" type="radio">
+		<label for="chapter_settings3"> mit einem regulären Ausdruck erkennen</label>
+		<br>
+		<input name="chapter_settings" id="chapter_settings4" type="radio">
+		<label for="chapter_settings4"> manuell eingeben</label>
+		<div>
+		/ <input id="chapter_pattern"> / <input id="chapter_flags" placeholder="gimuy" size="5">
+		</div>
+		<span></span>
+		<span></span>
+		<div>
+			<label for="chapter_settings5">Pro Zeile Buchstabenpositionen angeben ([Zahl] - [Zahl], z.B. "1 - 1337").</label>
+<br>
+			<textarea id="chapter_settings5" name="chapter_settings5" rows="4" cols="15"></textarea>
+		</div>
+	</label>
+</div>
+</div>
+		</aside>
+		<aside id="searches_view">
+		<div  class="list">
+			<nav>
+				<ul>
+					<li class="new" id="new_search" title="Suche erstellen"</li>
+				</ul>
+			</nav>
+			<ul id="searches_list">
+			</ul>
+		</div>
+		<div id="searches_settings">
+	<nav>
+		<ul>
+			<li id="search_save" class="save" title="Suche speichern"></li>
+			<li id="search_duplicate" class="duplicate" title="Suche duplizieren"</li>
+			<li id="search_reset" class="reset" title="Suche zurücksetzen"></li>
+			<li id="search_remove" class="remove" title="Suche löschen"></li>
+		</ul>
+	</nav>
+	<div>
+	<label>Name: <input id="search_name" placeholder="Also Sprach …"/></label>
+	<br>
+	<label>Farbe: <input id="search_color" type="color" value="#dd3044"/></label>
+	<br>
+	<label for="">Suchmethode:
+<br>
+		<input name="search_settings" id="search_settings1" type="radio">
+		<label for="search_settings1">Textsuche</label>
+<br>
+		<input name="search_settings" id="search_settings2" type="radio">
+		<label for="search_settings2">Regulärer Ausdruck</label>
+		<div>
+		<label>Suchtext: <input id="search_text" placeholder="Gott ist tot"></label>
+		</div>
+		<span></span>
+		<span></span>
+		<div>
+		<label>Ausdruck: / <input id="search_pattern" placeholder="„[^“]*“"> </label>/ <input id="search_flags" placeholder="gimuy" size="5">
+		</div>
+	</label>
+</div>
+		</div>
+		</aside>
+		<aside id="graphs_view">
+		<div  class="list">
+			<nav>
+				<ul>
+					<li class="new" id="new_graph" title="Graphen erstellen"></li>
+				</ul>
+			</nav>
+			<ul id="graphs_list">
+			</ul>
+		</div>
+		<div id="graphs_settings">
+	<nav>
+		<ul>
+			<li id="graph_save" class="save" title="Graphen speichern"></li>
+			<li id="graph_reset" class="reset" title="Graphen zurücksetzen"></li>
+			<li id="graph_remove" class="remove" title="Graphen löschen"></li>
+		</ul>
+	</nav>
+		<div>
+		<label>Graph: <input id="graph_name" placeholder="Das Wort Kapital bei Marx und Engels"/></label>
+		<label>Text: <input list="files_drop" id="graph_text"></label>
+		<datalist id="files_drop">
+		</datalist>
+		<label>Kapitel: <input list="chapters_drop" id="graph_chapter"></label>
+		<datalist id="chapters_drop">
+		</datalist>
+		<br>
+		<label>Suchen: <div id="graph_searches"></div></label>
+		<br>
+		</div>
+	</div>
+		</aside>
+		<aside id="manual_view">
+			<nav id="manual_settings">
+				<ul>
+				</ul>
+			</nav>
+		</aside>
+		<main id="main_view">
+			<div id="graph_view">
+				<nav>
+					<ul>
+						<li id="graph_show" title="alle Graphen anzeigen"></li>
+					</ul>
+				</nav>
+				<div id="graphs_canvas">
+				</div>
+			</div>
+		</main>
+	</body>
+</html>
